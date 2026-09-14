@@ -8,6 +8,7 @@ import allure
 
 load_dotenv()
 
+
 class APIClient:
     def __init__(self):
         environment_str = os.environ.get("ENVIRONMENT")
@@ -20,6 +21,7 @@ class APIClient:
         self.session = requests.Session()
         self.session.headers = {
             "Content-Type": "application/json",
+            "Accept": "application/json"
         }
 
     def get_base_url(self, environment: Environment) -> str:
@@ -67,9 +69,8 @@ class APIClient:
 
     def get_booking_by_id(self, booking_id):
         with allure.step(f"Getting booking by id: {booking_id}"):
-            url = f"{self.base_url}{Endpoints.BOOKING_ENDPOINT}{booking_id}"
-            headers = {"Accept": "application/json"}
-            response = self.session.get(url, headers=headers, timeout=Timeouts.TIMEOUT)
+            url = f"{self.base_url}{Endpoints.BOOKING_ENDPOINT}/{booking_id}"
+            response = self.session.get(url, timeout=Timeouts.TIMEOUT)
             response.raise_for_status()
         with allure.step("Checking status code"):
             assert response.status_code == 200, f"Expected status 200 but got {response.status_code}"
