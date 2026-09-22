@@ -122,3 +122,4 @@ class APIClient:
             assert response.status_code == 200, f"Expected status 200 but got {response.status_code}"
         return response.json()
 
+
