@@ -14,12 +14,12 @@ def api_client():
 @pytest.fixture()
 def booking_dates():
     today = datetime.today()
-    checkin_date = today + timedelta(days=10)
-    checkout_date = today + timedelta(days=5)
+    checkin = today + timedelta(days=5)
+    checkout = today + timedelta(days=10)
 
     return {
-        "checkin_date": checkin_date.strftime("%Y-%m-%d"),
-        "checkout_date": checkout_date.strftime("%Y-%m-%d"),
+        "checkin": checkin.strftime("%Y-%m-%d"),
+        "checkout": checkout.strftime("%Y-%m-%d"),
     }
 
 
