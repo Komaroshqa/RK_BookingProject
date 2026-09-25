@@ -24,7 +24,7 @@ def booking_dates():
 
 
 @pytest.fixture()
-def generate_random_booking_date(booking_dates):
+def generate_random_booking_data(booking_dates):
     faker = Faker()
     firstname = faker.first_name()
     lastname = faker.last_name()
@@ -42,3 +42,14 @@ def generate_random_booking_date(booking_dates):
     }
 
     return data
+
+
+@pytest.fixture()
+def created_booking(api_client, generate_random_booking_data):
+    payload = generate_random_booking_data
+    response = api_client.create_booking(payload)
+
+    return {
+        "payload": payload,
+        "response": response,
+    }
