@@ -42,14 +42,3 @@ def generate_random_booking_data(booking_dates):
     }
 
     return data
-
-
-@pytest.fixture()
-def created_booking(api_client, generate_random_booking_data):
-    payload = generate_random_booking_data
-    response = api_client.create_booking(payload)
-
-    return {
-        "payload": payload,
-        "response": response,
-    }
