@@ -92,7 +92,7 @@ class APIClient:
             response = self.session.post(url, json=booking_data)
             response.raise_for_status()
         with allure.step("Checking status code"):
-            assert response.status_code == 200, f"Expected status 200 but got {response.status_code}"
+            assert (response.status_code == 200), f"Expected status 200 but got {response.status_code}"
         return response.json()
 
     def get_booking_ids(self, params=None):
