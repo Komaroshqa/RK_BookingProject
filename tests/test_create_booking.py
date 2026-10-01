@@ -2,6 +2,7 @@ import allure
 import pytest
 from pydantic import ValidationError
 from core.models.booking import BookingResponse
+from requests.exceptions import HTTPError
 
 
 #Мой автотест из Урока 5 (Тесты на метод Ping):
@@ -74,10 +75,10 @@ def test_creating_booking_with_random_data(api_client, generate_random_booking_d
 @allure.story("Negative: creating booking without required fields")
 def test_creating_booking_without_required_fields(api_client, booking_dates):
     missing_fields = booking_dates
-    response = api_client.create_booking(missing_fields, raise_for_status=False)
 
-    with allure.step("Verify response status code"):
-        assert response.status_code == 500, f"Expected status 500 but got {response.status_code}"
+    with allure.step("Verify that creating booking without required fields returns 500 error"):
+        with pytest.raises(HTTPError, match="500"):
+            api_client.create_booking(missing_fields)
 
 
 @allure.feature("Test creating booking")
